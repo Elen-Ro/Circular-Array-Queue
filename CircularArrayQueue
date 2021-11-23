@@ -1,0 +1,77 @@
+import java.util.NoSuchElementException;
+
+// Implements Queue interface
+public class CircularArrayQueue<T> implements Queue<T> {
+    private final int DEFAULT_CAPACITY = 5; // Max size of queue is 5
+    private T[] queue; // The way of implementing  the queue
+    private int count = 0; // Where to put stuff
+    private int front = -1; // Define front (there is smth at 0 position)
+    private int back = -1; // Define back (there is smth at 0 position)
+
+    public CircularArrayQueue() {
+        // Define queue that will hold queue elements (create an object)
+        queue = (T[]) (new Object[DEFAULT_CAPACITY]);
+    }
+
+    @Override
+    public void enqueue(T item) {
+        if (count == 0) { // If it is empty
+            back = 0; // Front and back are the same, equals to 0
+            front = 0;
+            queue[0] = item; // Define queue, doesn't matter if it's back or front
+            count++; // Increment count
+        } else {
+            back++; // Increment back
+            queue[back % DEFAULT_CAPACITY] = item; // Put the item in the back
+            // % is used for wrapping around default capacity, it lets us to reuse empty spot
+            count++; // Increment count
+        }
+    }
+
+    @Override
+    public T dequeue() throws NoSuchElementException {
+        if (count == 0) { // If it is empty
+            throw new NoSuchElementException();
+        } else {
+            count--; // Decrement count
+            front++; // Increment front
+            return queue[(front - 1) % DEFAULT_CAPACITY]; // Return front value minus 1
+            // % is used for wrapping around default capacity, it lets us to reuse empty spot
+        }
+    }
+
+    @Override
+    public T frontValue() throws NoSuchElementException {
+        if (count == 0) { // If it is empty
+            throw new NoSuchElementException();
+        } else {
+            return queue[front]; // Return front value
+        }
+    }
+
+    @Override
+    public int length() {
+        return ((back + DEFAULT_CAPACITY) - front + 1) % (DEFAULT_CAPACITY);
+        // % is used for wrapping around default capacity, it lets us to reuse empty spot
+    }
+
+    // Source: http://faculty.washington.edu/moishe/javademos/ch07%20Code/jss2/CircularArrayQueue.java
+    // The code from the source was modified a little
+    @Override
+    public String toString() {
+        if(length() <= 0) return "Empty Queue."; // If it is empty, display the message "empty queue"
+        // If there is data
+        String result = ""; // To create spaces in output
+        int scan = 0; // Initialize scan equals to 0
+        while (scan < count) { // It will work till scan less than count
+            if (queue[scan] != null) { // If scan is not equal to 0
+                result += queue[(front + scan) % DEFAULT_CAPACITY].toString() + "\n";
+                // Return the value given in string format
+                // % is used for wrapping around default capacity, it lets us to reuse empty spot
+                // ( += ) add the right and left parts and calculate the result
+            }
+            scan++; // Increment scan
+        }
+        return result; // Return result
+    }
+}
