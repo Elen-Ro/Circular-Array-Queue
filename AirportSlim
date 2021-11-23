@@ -1,0 +1,80 @@
+public class AirportSlim {
+    public static void main(String[] args) {
+        //Two runways (create an object)
+        Queue<Airplane> runway1 = new CircularArrayQueue<>();
+        Queue<Airplane> runway2 = new CircularArrayQueue<>();
+        // Initializing two runways with the desired data
+        fillRunways(runway1, runway2);
+        // Choose any of the next 2 methods
+        // First one is default priority, second one is more priority for runway1
+        airportSimulator(runway1, runway2);
+        //airportSimulatorPriority1(runway1, runway2);
+    }
+
+    private static void airportSimulator(Queue<Airplane> runway1, Queue<Airplane> runway2) {
+        // This basic method has 2 turns, one for runway1 and the other for runway2
+        int turn = 0;
+        // While there is any plane in runway1 or runway2
+        while(runway1.length() > 0 || runway2.length() > 0){
+            // Display both runways
+            if(turn == 0 && runway1.length() > 0){
+                displayRunways(runway1, runway2);
+                System.out.println(runway1.dequeue() + " is taking off on runway 1");
+            }
+            if(turn == 1 && runway2.length() > 0) {
+                displayRunways(runway1, runway2);
+                System.out.println(runway2.dequeue() + " is taking off on runway 2");
+            }
+            // Next turn (%2 means that only 2 turns are possible)
+            turn = (turn+1) % 2;
+        }
+    }
+
+    private static void airportSimulatorPriority1(Queue<Airplane> runway1, Queue<Airplane> runway2) {
+        // This basic method has 3 turns, two for runway1 and the other for runway2
+        int turn = 0;
+        // While there is any plane in runway1 or runway2
+        while(runway1.length() > 0 || runway2.length() > 0){
+            // Display both runways
+            if(turn < 2 && runway1.length() > 0){
+                displayRunways(runway1, runway2);
+                System.out.println(runway1.dequeue() + " is taking off on runway 1");
+            }
+            if(turn == 2 && runway2.length() > 0) {
+                displayRunways(runway1, runway2);
+                System.out.println(runway2.dequeue() + " is taking off on runway 2");
+            }
+            // Next turn (%3 means that 3 turns are possible)
+            turn = (turn+1) % 3;
+        }
+    }
+
+    // Fill runways
+    static void fillRunways(Queue<Airplane> runway1, Queue<Airplane> runway2){
+        System.out.println("Loading Airplane queues...");
+        // Fill default data
+        runway1.enqueue(new Airplane(451, "American Airlines"));
+        runway1.enqueue(new Airplane(1561, "United Airlines"));
+        runway1.enqueue(new Airplane(3134, "United Airlines"));
+
+        runway2.enqueue(new Airplane(1134, "Southwest Airlines"));
+        runway2.enqueue(new Airplane(1351, "American Airlines"));
+        runway2.enqueue(new Airplane(1134, "United Airlines"));
+        runway2.enqueue(new Airplane(1234, "Southwest Airlines"));
+
+        System.out.println("Planes are ready for take off!");
+    }
+
+    // Display runways
+    static void displayRunways(Queue<Airplane> runway1, Queue<Airplane> runway2) {
+        System.out.println("\nCurrently waiting in runways:");
+        System.out.printf("Runway " + 1 + ": " + runway1.toString());
+        System.out.println("\nRunway " + 2 + ": " + runway2.toString());
+    }
+}
+
+
+
+
+
+
