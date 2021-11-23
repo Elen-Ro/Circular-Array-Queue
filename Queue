@@ -1,0 +1,13 @@
+// Circular Array Queue implements all these methods
+import java.util.NoSuchElementException;
+
+public interface Queue<T> {
+    public void enqueue(T item);
+
+    public T dequeue() throws NoSuchElementException;
+
+    public T frontValue() throws NoSuchElementException;
+
+    public int length();
+
+}
