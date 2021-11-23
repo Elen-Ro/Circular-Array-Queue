@@ -1,0 +1,38 @@
+public class Airplane {
+    //Variable definition or attributes
+    //Private - access within the class
+    private int flightNum;
+    private String airlineName;
+
+    //Constructor
+    public Airplane(int flightNum, String airlineName) {
+        this.flightNum = flightNum;
+        this.airlineName = airlineName;
+    }
+
+    // Get and set methods
+    public int getFlightNum() {
+        return flightNum;
+    }
+
+    public void setFlightNum(int flightNum) {
+        this.flightNum = flightNum;
+    }
+
+    public String getAirlineName() {
+        return airlineName;
+    }
+
+    public void setAirlineName(String airlineName) {
+        this.airlineName = airlineName;
+    }
+
+
+    //Overriding the toString method
+    //Return the value given in string format
+    @Override
+    public String toString() {
+        return "Flight number #" + flightNum +
+                " with " + airlineName;
+    }
+}
